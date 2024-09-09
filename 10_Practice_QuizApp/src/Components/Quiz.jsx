@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import QUESTIONS from '../questions.js';
+import QuestionTimer from "./QuestionTimer.jsx";
 import quizCompleteImg from '../assets/quiz-complete.png'
 
 export default function Quiz() {
@@ -8,11 +9,17 @@ export default function Quiz() {
     const activeQuestionIndex = userAnswers.length;
     const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
-    function handleSelectAnswer(selectedAnswer) {
-        setUserAnswers(prevUserAnswers => {
-            return [...prevUserAnswers, selectedAnswer];
-        });
-    }
+    const handleSelectAnswer = useCallback(
+        function handleSelectAnswer(selectedAnswer) {
+            setUserAnswers(prevUserAnswers => {
+                return [...prevUserAnswers, selectedAnswer];
+            });
+        }, []); // we use useCallback in here because everytime handleSelectAnswer is called a new reference is made,
+    // this is mostly due to optimizations, might not be entirely needed? 
+    //setUserAnswers DOES NOT need to be included because React already provides us with the lastest and most stable version.
+
+    const handleSkipAnswer = useCallback(() => handleSelectAnswer(null), [handleSelectAnswer]);
+    // In useCallback, dependencies are not just props or state... —they are any value that could change across re-renders.
 
     if (quizIsComplete) {
         return <div id="summary">
@@ -36,6 +43,14 @@ export default function Quiz() {
     return (
         <div id="quiz">
             <div id="question">
+                <QuestionTimer
+                    key= {activeQuestionIndex} //When the key is re-created the component gets create a new component,
+                    // since REACT ONLY RE-RENDERS the components that changes, even if the QUIZ component gets "re-created"
+                    timeout={5000}
+                    onTimeout={handleSkipAnswer}>
+                    {/* When <QuestionTimer> gets re-executed a new handleSelectAnswer(null) gets created.
+                     so we need useCallback to prevent the function to be re-created again. */}
+                </QuestionTimer>
                 <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
                 <ul id="answers">
                     {shuffledAnswers.map(
