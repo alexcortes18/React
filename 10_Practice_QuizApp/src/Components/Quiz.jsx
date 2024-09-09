@@ -4,18 +4,32 @@ import QuestionTimer from "./QuestionTimer.jsx";
 import quizCompleteImg from '../assets/quiz-complete.png'
 
 export default function Quiz() {
+    const [answerState, setAnswerState] = useState('');
     const [userAnswers, setUserAnswers] = useState([]);
 
-    const activeQuestionIndex = userAnswers.length;
+    const activeQuestionIndex = answerState === '' ? userAnswers.length : userAnswers.length - 1;
     const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
-    const handleSelectAnswer = useCallback(
-        function handleSelectAnswer(selectedAnswer) {
-            setUserAnswers(prevUserAnswers => {
-                return [...prevUserAnswers, selectedAnswer];
-            });
-        }, []); // we use useCallback in here because everytime handleSelectAnswer is called a new reference is made,
-    // this is mostly due to optimizations, might not be entirely needed? 
+    const handleSelectAnswer = useCallback(function handleSelectAnswer(selectedAnswer) {
+        setAnswerState('answered');
+        setUserAnswers(prevUserAnswers => {
+            return [...prevUserAnswers, selectedAnswer];
+        });
+
+        // Change the state of the answer to correct/incorrect
+        setTimeout(() => {
+            if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
+                setAnswerState('correct');
+            } else {
+                setAnswerState('wrong');
+            }
+            //Display the correct/incorrect color for 2 seconds.
+            setTimeout(() => {
+                setAnswerState('');
+            }, 2000);
+        }, 1000);
+    }, [activeQuestionIndex]);
+    // activeQuestionIndex needs to be included since if it changes, handleSelectAnswer needs to be re-created
     //setUserAnswers DOES NOT need to be included because React already provides us with the lastest and most stable version.
 
     const handleSkipAnswer = useCallback(() => handleSelectAnswer(null), [handleSelectAnswer]);
@@ -44,7 +58,7 @@ export default function Quiz() {
         <div id="quiz">
             <div id="question">
                 <QuestionTimer
-                    key= {activeQuestionIndex} //When the key is re-created the component gets create a new component,
+                    key={activeQuestionIndex} //When the key is re-created the component gets create a new component,
                     // since REACT ONLY RE-RENDERS the components that changes, even if the QUIZ component gets "re-created"
                     timeout={5000}
                     onTimeout={handleSkipAnswer}>
@@ -53,14 +67,26 @@ export default function Quiz() {
                 </QuestionTimer>
                 <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
                 <ul id="answers">
-                    {shuffledAnswers.map(
-                        answer => (
+                    {shuffledAnswers.map(answer => {
+                        const isSelected =  userAnswers[userAnswers.length - 1] === answer;
+                        let cssClass = '';
+
+                        if (answerState === 'answered' & isSelected){
+                            cssClass = 'selected';
+                        }
+
+                        if ((answerState === 'correct' || answerState=== 'wrong') & isSelected){
+                            cssClass = answerState;
+                        }
+
+                        return (
                             <li key={answer} className="answer">
-                                <button onClick={() => handleSelectAnswer(answer)}>
+                                <button className={cssClass} onClick={() => handleSelectAnswer(answer)}>
                                     {answer}
                                 </button>
                             </li>
                         )
+                    }
                     )}
                 </ul>
             </div>
