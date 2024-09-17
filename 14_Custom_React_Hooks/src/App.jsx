@@ -28,10 +28,8 @@ function App() {
       } catch (error) {
         setError({ message: error.message || 'Failed to fetch user places.' });
       }
-
       setIsFetching(false);
     }
-
     fetchPlaces();
   }, []);
 
