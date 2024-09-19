@@ -24,6 +24,9 @@ export default function Signup() {
         const acquisitionChannel = formData.getAll("acquisition"); // `getAll` returns an array of all values for the specified name.
         data.acquisition = acquisitionChannel;
         console.log(data); // Outputs an object with all acquisition channels, e.g., { acquisition: ['google', 'friend'] }
+
+        // To reset the form we can either use the "type='reset'" in a button, or this:
+        // event.target.reset();
     }
 
 
