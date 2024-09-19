@@ -6,11 +6,14 @@ for example, but this is discourage, as it is imperative code, and not the usual
 options.
 */
 
+import { useState } from "react";
 import { useRef } from "react";
 
 export default function RefLogin() {
   const email = useRef();
   const password = useRef();
+
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
 
 
   function handleSubmit(event) {
@@ -19,33 +22,42 @@ export default function RefLogin() {
     const enteredEmail = email.current.value;
     const enteredPassword = password.current.value;
 
-    console.log('User email:' + enteredEmail);
-    console.log('User password:' + enteredPassword);
+    const emailIsValid = enteredEmail.includes("@");
+    if (!emailIsValid) {
+      setEmailIsInvalid(true);
+      return;
+    }
+
+    setEmailIsInvalid(false);
+    console.log("Sending HTTP request...")
   }
 
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
 
+  return (
+    // noValidate is used for some Operating Systems or browsers to be able to use our own validation logic, instead
+    // of the browsers logic.
+    <form onSubmit={handleSubmit} noValidate>
+      <h2>Login</h2>
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input
             id="email"
-            type="email"
+            type="email" // or we can comment this and then we can see our logic for validating the email.
             name="email"
             ref={email}
           />
+          <div className="control-error">{emailIsInvalid && <p>Please enter a valid email.</p>}</div>
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
-          <input 
-          id="password" 
-          type="password" 
-          name="password" 
-          ref={password}
+          <input
+            id="password"
+            type="password"
+            name="password"
+            ref={password}
           />
         </div>
       </div>
