@@ -75,7 +75,11 @@ export function CartContextProvider({ children }) {
             removeItem,
         }
 
+    console.log(cartCtx);
+
     return <CartContext.Provider value={cartCtx}>{children}</CartContext.Provider>
+    // <CartContextProvider> is the one you wrap around ALL the components you want to make your context available too, 
+    // maybe usually in the APP component.
 }
 
-export default CartContext;
+export default CartContext; // this is the one you import in other files to use the functions and values.
