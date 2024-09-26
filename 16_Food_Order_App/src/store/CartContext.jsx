@@ -3,7 +3,8 @@ import { createContext, useReducer } from "react";
 const CartContext = createContext({
     items: [],
     addItem: (item) => { },
-    removeItem: (id) => { }
+    removeItem: (id) => { },
+    clearCart: () => { }
 });
 
 // the state is provided by REACT in useReducer, but the action is usually an {} object, we provide in our functions,
@@ -44,12 +45,15 @@ function cartReducer(state, action) {
             }
             updatedItems[existingCartItemIndex] = updatedItem;
         }
-        return{
+        return {
             ...state,
             items: updatedItems
         }
-
     }
+    if (action.type === 'CLEAR_CART') {
+        return { ...state, items: [] };
+    }
+
     return state;
 }
 
@@ -60,20 +64,25 @@ export function CartContextProvider({ children }) {
             items: []
         });
 
-        
-        function addItem(item){
-            dispatchCartAction({type: 'ADD_ITEM', item: item})
-        }
-        
-        function removeItem(id){
-            dispatchCartAction({type: 'REMOVE_ITEM', id: id})
-        }
-        
-        const cartCtx = {
-            items: cart.items,
-            addItem, // since they have the same name we can avoid-> addItem: addItem.
-            removeItem,
-        }
+
+    function addItem(item) {
+        dispatchCartAction({ type: 'ADD_ITEM', item: item })
+    }
+
+    function removeItem(id) {
+        dispatchCartAction({ type: 'REMOVE_ITEM', id: id })
+    }
+
+    function clearCart(){
+        dispatchCartAction({ type: 'CLEAR_CART'});
+    }
+
+    const cartCtx = {
+        items: cart.items,
+        addItem, // since they have the same name we can avoid-> addItem: addItem.
+        removeItem,
+        clearCart
+    }
 
     console.log(cartCtx);
 

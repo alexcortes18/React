@@ -16,7 +16,10 @@ export default function useHttp(url, config, initialData) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
 
-    // 'data' object is only set outside when calling sendRequest in another file.
+    function clearData(){
+        setData(initialData);
+    }
+
     const sendRequest = useCallback(
         async function sendRequest(data) {
             setIsLoading(true);
@@ -39,6 +42,7 @@ export default function useHttp(url, config, initialData) {
         data,
         isLoading,
         error,
+        clearData,
         sendRequest
     }
 }
