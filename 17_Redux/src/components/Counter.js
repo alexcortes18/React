@@ -1,4 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { Component } from 'react';
+import { useSelector, useDispatch, connect } from 'react-redux';
 
 import classes from './Counter.module.css';
 
@@ -9,14 +10,14 @@ const Counter = () => {
   // with the Redux state.
 
   const incrementHandle = () => {
-    dispatch({ type: 'Increment'})
+    dispatch({ type: 'Increment' })
   }
 
   const decrementHandle = () => {
-    dispatch({ type: 'Decrement'})
+    dispatch({ type: 'Decrement' })
   }
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => { };
 
   return (
     <main className={classes.counter}>
@@ -31,4 +32,63 @@ const Counter = () => {
   );
 };
 
-export default Counter;
+
+
+// Class based Components.
+// This is to learn how to apply Redux to React based on classes (which i skipped)...
+// class Counter extends Component {
+//   // constructor(){} // to initialize state. No state in here.
+
+//   incrementHandle() {
+//     this.props.increment();
+//    }
+
+//   decrementHandle() {
+//     this.props.decrement();
+//    }
+
+//   toggleCounterHandler() { }
+
+//   render() {
+//     return (
+//       <main className={classes.counter}>
+//         <h1>Redux Counter</h1>
+//         <div className={classes.value}>{this.props.counter}</div>
+//         <div>
+//           <button onClick={this.incrementHandle.bind(this)}>Increment</button>
+//           <button onClick={this.decrementHandle.bind(this)}>Decrement</button>
+//         </div>
+//         <button onClick={this.toggleCounterHandler}>Toggle Counter</button>
+//       </main>
+//     );
+//   }
+// }
+
+// export default Counter; //for normal functional based React
+
+
+
+// for class based Components:
+
+// functions needed to pass as arguments for connect():
+// 1. mapStateToProps (name is convention).
+// Receives the Redux state and then provides:
+// - Keys are the names of the props received by the component,
+// - Values are the logic for drilling into the Redux state.
+// const mapStateToProps = state => {
+//   return {
+//     counter: state.counter
+//   };
+// }
+
+// // Stores the dispatch as a function to the props for the Component class.
+// const mapDispatchToProps = dispatch => {
+//   return{
+//     increment: ()=> dispatch({type: 'Increment'}),
+//     decrement: ()=> dispatch({type: 'Decrement'})
+//   }
+// }
+
+// export default connect(mapStateToProps,mapDispatchToProps)(Counter);
+// // connect() returns a new function which then we pass the Counter component as an argument.
+// // connect() already sets up a subscription for us.
