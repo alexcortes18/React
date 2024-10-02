@@ -5,8 +5,9 @@ import classes from './Counter.module.css';
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const counter = useSelector(state => state.counter);
-  const show = useSelector(state => state.showCounter);
+  // const counter = useSelector(state => state.counter); // This works when we had only ONE slice
+  const counter = useSelector(state => state.counter.counter); //The first counter is the key name of the slice, the second counter is the value of the counter in initialState.
+  const show = useSelector(state => state.counter.showCounter);
 
   const incrementHandle = () => {
     dispatch(counterActions.increment()) //new way of calling actions with Redux-toolkit.
