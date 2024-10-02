@@ -8,29 +8,38 @@ const Counter = () => {
   const counter = useSelector(state => state.counter); //useSelector subscribes for us, so no need to use the
   // the subscribe function. useSelector handles that behind the scenes and ensures your component stays in sync 
   // with the Redux state.
+  const show = useSelector(state => state.showCounter);
 
   const incrementHandle = () => {
     dispatch({ type: 'Increment' })
+  }
+
+  const increaseHandler = () => {
+    dispatch({type: 'Increase', amount: 5})
   }
 
   const decrementHandle = () => {
     dispatch({ type: 'Decrement' })
   }
 
-  const toggleCounterHandler = () => { };
+  const toggleCounterHandler = () => {
+    dispatch({type: "Toggle"})
+   };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {show && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandle}>Increment</button>
+        <button onClick={increaseHandler}>Increment by 5</button>
         <button onClick={decrementHandle}>Decrement</button>
-      </div>
+      </div>    
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
     </main>
   );
 };
+export default Counter;
 
 
 
@@ -64,7 +73,6 @@ const Counter = () => {
 //   }
 // }
 
-// export default Counter; //for normal functional based React
 
 
 
