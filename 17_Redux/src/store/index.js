@@ -1,3 +1,7 @@
+/*
+This is use WITH Counter-old.js. To learn about normal Redux without the toolkit.
+*/
+
 // const redux = require('redux');
 // import redux from 'redux'
 import { createStore } from 'redux'

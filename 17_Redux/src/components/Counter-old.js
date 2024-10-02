@@ -1,29 +1,35 @@
+/*
+This is the code for the Counter when using normal Redux, NOT the redux-toolkit. This goes hand in hand with
+the store in /store/index.js
+*/
+
+
 import { Component } from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
-import { counterActions } from '../store/index-redux-toolkit-store';
+
 import classes from './Counter.module.css';
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const counter = useSelector(state => state.counter);
+  const counter = useSelector(state => state.counter); //useSelector subscribes for us, so no need to use the
+  // the subscribe function. useSelector handles that behind the scenes and ensures your component stays in sync 
+  // with the Redux state.
   const show = useSelector(state => state.showCounter);
 
   const incrementHandle = () => {
-    dispatch(counterActions.increment()) //new way of calling actions with Redux-toolkit.
+    dispatch({ type: 'Increment' })
   }
 
   const increaseHandler = () => {
-    dispatch(counterActions.increase(5))
-        // Redux-toolkit handles the  former dispatch function by creating this:
-    // { type: SOME_UNIQUE_IDENTIFIER, payload: 10}
+    dispatch({type: 'Increase', amount: 5})
   }
 
   const decrementHandle = () => {
-    dispatch(counterActions.decrement())
+    dispatch({ type: 'Decrement' })
   }
 
   const toggleCounterHandler = () => {
-    dispatch(counterActions.toggleCounter())
+    dispatch({type: "Toggle"})
    };
 
   return (
