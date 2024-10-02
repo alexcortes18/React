@@ -7,6 +7,9 @@ Also we do not have to specify a 'type' when trying to dispatch. Instead we can 
 actions (reducers) by exporting the Slice.actions, and then using it in another file.
 */
 
+// YOU CAN put each slice in a new file and then the configureStore in the main store file, then just import
+// the slices (or the slice.reducer) and use it in the index.js file or wherever you have the configureStore.
+// I am just skipping it for now.
 
 const initialCounterState = { counter: 0, showCounter: true }
 const counterSlice = createSlice({
