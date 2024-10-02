@@ -34,7 +34,7 @@ const initialAuthState = { isAuthenticated: false };
 const authSlice = createSlice({
     name: 'auth',
     initialState: initialAuthState,
-    reducerss: {
+    reducers: {
         login(state) {
             state.isAuthenticated = true;
         },
@@ -43,7 +43,6 @@ const authSlice = createSlice({
         }
     }
 });
-
 
 const store = configureStore({
     reducer: { // Only one root reducer, which can take ONE reducer function (if we only had 1 slice), such as 'reducer: counterSlice.reducer', OR a map of reducers functions.
