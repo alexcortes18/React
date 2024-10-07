@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxks/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const uiSlice = createSlice({
     name: 'ui',
