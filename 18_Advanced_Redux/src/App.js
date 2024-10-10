@@ -5,7 +5,7 @@ import Notification from './components/UI/Notification';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { sendCartData } from './store/cart-actions';
+import { sendCartData, fetchCartData } from './store/cart-actions';
 
 let isInitial = true;
 
@@ -20,15 +20,23 @@ function App() {
   // SHOULD NOT manage asynchronous code. Given this, we can outsource our code to a hook like useEffect in our
   // component, BUT maybe it gets too long. This is why then we can outsource it again to the same file of our slicer
   // but not in the createSlice() itself, rather in another separate function (which could be a THUNK).
+
+  useEffect(()=>{
+    dispatch(fetchCartData());
+  },[dispatch]) // dispatch is just put here for completeness sake, but it will never re-run.
+
   useEffect(() => {
     if(isInitial){
       isInitial = false; // This is require as a first pass since if not it would run one time and update send 
       // information to the backend. In THIS case, we only want to send info when the cart updates.
       return;
     }
-    dispatch(sendCartData(cart)); // even though dispatch should be only with reducers of our slicers, we can 
-    // dispatch any name of function as long as they themselves return another function (this is named THUNK),
-    // which can have any logic PLUS dispathing actions defined in our Slices.
+    if(cart.changed == true)
+    {
+      dispatch(sendCartData(cart)); // even though dispatch should be only with reducers of our slicers, we can 
+      // dispatch any name of function as long as they themselves return another function (this is named THUNK),
+      // which can have any logic PLUS dispathing actions defined in our Slices.
+    }
   }, [cart, dispatch]);
 
   return (
