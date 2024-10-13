@@ -2,17 +2,19 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import HomePage from './pages/Home';
 import ProductsPage from './pages/Products';
 import RootLayout from './pages/Root';
+import ErrorPage from './pages/Error';
 
 // First way of defining routes.
 const router = createBrowserRouter([
   // each object is a path to be defined.
   // Path: which path we want, and element: which component to show.
   {
-    path: '/',
+    path: '/', 
     element: <RootLayout></RootLayout>,
+    errorElement: <ErrorPage/>,
     children: [
       { path: '/', element: <HomePage /> },
-      { path: '/products', element: <ProductsPage /> }
+      { path: '/products', element: <ProductsPage />}
     ]
   }
 ]);
