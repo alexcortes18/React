@@ -3,6 +3,7 @@ import HomePage from './pages/Home';
 import ProductsPage from './pages/Products';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/Error';
+import ProductDetailsPage from './pages/ProductDetail';
 
 // First way of defining routes.
 const router = createBrowserRouter([
@@ -14,7 +15,9 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage/>,
     children: [
       { path: '/', element: <HomePage /> },
-      { path: '/products', element: <ProductsPage />}
+      { path: '/products', element: <ProductsPage />},
+      { path: '/products/:productId', element: <ProductDetailsPage/>}
+      // when adding ":", we are making a dynamic route.
     ]
   }
 ]);
