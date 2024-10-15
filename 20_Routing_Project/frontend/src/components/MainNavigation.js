@@ -1,3 +1,4 @@
+import { NavLink} from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
@@ -6,10 +7,10 @@ function MainNavigation() {
       <nav>
         <ul className={classes.list}>
           <li>
-            <a>Home</a>
+            <NavLink to={"/"} className={({ isActive }) => isActive ? "active" : undefined}>Home</NavLink>
           </li>
           <li>
-            <a>Events</a>
+            <NavLink to={"/events"} className={({ isActive }) => isActive ? "active" : undefined}>Events</NavLink>
           </li>
         </ul>
       </nav>

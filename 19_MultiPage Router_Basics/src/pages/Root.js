@@ -7,7 +7,8 @@ export default function RootLayout() {
         <>
             <MainNavigation></MainNavigation>
             <main>
-                <Outlet></Outlet>
+                <Outlet></Outlet> 
+                {/* This Outlet component is needed to render child routes. */}
             </main>
 
         </>
