@@ -14,11 +14,14 @@ const router = createBrowserRouter([
     element: <RootLayout></RootLayout>,
     errorElement: <ErrorPage/>,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/products', element: <ProductsPage />},
-      { path: '/products/:productId', element: <ProductDetailsPage/>}
+      { path: '', element: <HomePage /> },
+      { path: 'products', element: <ProductsPage />},
+      { path: 'products/:productId', element: <ProductDetailsPage/>}
       // when adding ":", we are making a dynamic route.
     ]
+    // when we do NOT add "/" for the first character of the path of the children, we make them relative paths, 
+    // which makes React go and wrap them around the parent path (which is ok). If we add the "/" we make it absolute
+    // path.
   }
 ]);
 

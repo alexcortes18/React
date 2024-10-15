@@ -13,7 +13,8 @@ export default function ProductsPage() {
             <h1>The Products Page.</h1>
             {PRODUCTS.map((product) =>
                 <li key={product.id}>
-                    <Link to={`/products/${product.id}`}>{product.title}</Link>
+                    {/* <Link to={`/products/${product.id}`}>{product.title}</Link>  using absolute path*/}
+                    <Link to={`${product.id}`}>{product.title}</Link>
                 </li>)}
         </>
     );
