@@ -14,7 +14,8 @@ const router = createBrowserRouter([
     element: <RootLayout></RootLayout>,
     errorElement: <ErrorPage/>,
     children: [
-      { path: '', element: <HomePage /> },
+      // { path: '', element: <HomePage /> }, // We are setting the home page as the same as wrapper. It has to be empty.
+      { index: true, element: <HomePage/>}, // This is the same as the above.
       { path: 'products', element: <ProductsPage />},
       { path: 'products/:productId', element: <ProductDetailsPage/>}
       // when adding ":", we are making a dynamic route.
