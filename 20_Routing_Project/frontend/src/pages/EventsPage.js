@@ -31,8 +31,10 @@ function EventsPage() {
     // fetchEvents();
     //   }, []);
 
-    const events = useLoaderData(); // this as it is, provides us with the data coming from our Loader function
+    const data = useLoaderData(); // this as it is, provides us with the data coming from our Loader function
     // that we defined in the App.js, in our Router in the <EventsPage/> route path's loader.
+
+    const events = data.events; // if we just return 'response' in our Loader function.
 
     return (
         <>
@@ -56,14 +58,25 @@ export async function loader() {
     if (!response.ok) {
         // ... for later
     } else {
-        const resData = await response.json();
-        return resData.events;
-        // the loader function makes the returned value available in the page we render here (EventsPage)
-        // It is ALSO available for any children of <EventsPage>
+         // this was before... :
+        // OPTION 1:
+        // const resData = await response.json();
+        // return resData.events; 
+        
+
+        // we can return any kind of data, for example a 'Response' data, because the React 'router' package
+        // will already extrat the data from our Response when using useLoaderData(). But why return a Response
+        // object like the one below:
+        // OPTION 2:
+        // const res = new Response('any data', {status: 201}); //built in into the browser. A modern browser feature.
+
+        // if we can just return {const resData = await response.json(); return resData.events;} ? Because
+        // fetch returns a Promise that resolves to a Response: Promise<Response>.
+
+        // so we can just take the response and return that in the loader;
+        // OPTION 3:
+        return response; // and useLoaderData will give us the data from the response, but we might need to dig a bit
+        // into it like something.events (in this case we have an events object).
+
     }
-    // loader -> allows us to load and fetch our data before rendering the component <EventsPage>
-    // loader is a property that loads/executes the function whenever we are about to visit this route.
-    // So just before the JSX code is render, the loader function gets executed. This is wanted to be able
-    // to load an http request before rendering the component (which is the behavior we have learned so far
-    // while using useEffect().)
 }
