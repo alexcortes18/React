@@ -40,23 +40,26 @@ const router = createBrowserRouter([
         element: <EventRootLayout />,
         children: [
           // { path: "", element: <EventsPage/> },
-          { index: true, element: <EventsPage/>, loader: async()=> {
-            const response = await fetch('http://localhost:8080/events');
+          {
+            index: true, element: <EventsPage />,
+            loader: async () => { // we MUST put the loader in the path of the child that will load the HTTP request.
+              const response = await fetch('http://localhost:8080/events');
 
-            if (!response.ok) {
-              // ... for later
-            } else {
-              const resData = await response.json();
-              return resData.events;
-              // the loader function makes the returned value available in the page we render here (EventsPage)
-              // and in any other component where we need it.
-            }
-            // loader -> allows us to load and fetch our data before rendering the component <EventsPage>
-            // loader is a property that loads/executes the function whenever we are about to visit this route.
-            // So just before the JSX code is render, the loader function gets executed. This is wanted to be able
-            // to load an http request before rendering the component (which is the behavior we have learned so far
-            // while using useEffect().)
-          }},
+              if (!response.ok) {
+                // ... for later
+              } else {
+                const resData = await response.json();
+                return resData.events;
+                // the loader function makes the returned value available in the page we render here (EventsPage)
+                // and in any other component where we need it.
+              }
+              // loader -> allows us to load and fetch our data before rendering the component <EventsPage>
+              // loader is a property that loads/executes the function whenever we are about to visit this route.
+              // So just before the JSX code is render, the loader function gets executed. This is wanted to be able
+              // to load an http request before rendering the component (which is the behavior we have learned so far
+              // while using useEffect().)
+            },
+          },
           { path: ':eventId', element: <EventDetailPage /> },
           { path: 'new', element: <NewEventPage /> },
           { path: ':eventId/edit', element: <EditEventPage /> },
@@ -65,7 +68,6 @@ const router = createBrowserRouter([
     ]
   }
 ]);
-
 
 function App() {
   return <RouterProvider router={router} />
