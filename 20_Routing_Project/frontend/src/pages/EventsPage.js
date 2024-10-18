@@ -34,6 +34,10 @@ function EventsPage() {
     const data = useLoaderData(); // this as it is, provides us with the data coming from our Loader function
     // that we defined in the App.js, in our Router in the <EventsPage/> route path's loader.
 
+    // if(data.isError){ // data return by loader function, and isError is true when !response.ok happens
+    //     return <p>{data.message}</p>
+    // }
+
     const events = data.events; // if we just return 'response' in our Loader function.
 
     return (
@@ -53,10 +57,14 @@ function EventsPage() {
 export default EventsPage;
 
 export async function loader() {
-    const response = await fetch('http://localhost:8080/events');
+    const response = await fetch('http://localhost:8080/eventssss');
 
     if (!response.ok) {
-        // ... for later
+        // return { isError: true, message: 'Could not fetch events.'}; // one way of doing it or:
+
+        throw {message: 'Could not fetch events.'}; // this is pass to the errorElement's component (ErrorPage) as 
+        //part of the useRouteError hook.
+
     } else {
          // this was before... :
         // OPTION 1:

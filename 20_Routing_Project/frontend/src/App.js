@@ -27,12 +27,13 @@ import EditEventPage from './pages/EditEventPage';
 import NewEventPage from './pages/NewEventPage';
 import RootLayout from './pages/RootLayout';
 import EventRootLayout from './pages/EventRoot';
+import ErrorPage from './pages/Error'
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    // errorElement: ,
+    errorElement: <ErrorPage/>, // this will show up if there is an error in this level, or any lower level.
     children: [
       { index: true, element: <HomePage /> },
       {
