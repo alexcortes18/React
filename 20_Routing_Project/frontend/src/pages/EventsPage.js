@@ -62,15 +62,19 @@ export async function loader() {
     if (!response.ok) {
         // return { isError: true, message: 'Could not fetch events.'}; // one way of doing it or:
 
-        throw {message: 'Could not fetch events.'}; // this is pass to the errorElement's component (ErrorPage) as 
+        // throw {message: 'Could not fetch events.'}; // this is pass to the errorElement's component (ErrorPage) as 
         //part of the useRouteError hook.
 
+        throw new Response(JSON.stringify({ message: "Could not fetch events." }),
+            { status: 500 }); // we can throw a Response instead of a normal JS object to include a status object.
+            // This can again be be used in errorElement's component by using the useRouteError hook.
+
     } else {
-         // this was before... :
+        // this was before... :
         // OPTION 1:
         // const resData = await response.json();
         // return resData.events; 
-        
+
 
         // we can return any kind of data, for example a 'Response' data, because the React 'router' package
         // will already extrat the data from our Response when using useLoaderData(). But why return a Response
