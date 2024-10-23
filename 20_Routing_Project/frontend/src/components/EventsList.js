@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classes from './EventsList.module.css';
 
 function EventsList({ events }) { // This was before when we used the loader in EventsPage.
@@ -10,13 +10,13 @@ function EventsList({ events }) { // This was before when we used the loader in 
       <ul className={classes.list}>
         {events.map((event) => (
           <li key={event.id} className={classes.item}>
-            <a href="...">
+            <Link to={event.id}> {/* Relative path. Goes to Event Details Page*/}
               <img src={event.image} alt={event.title} />
               <div className={classes.content}>
                 <h2>{event.title}</h2>
                 <time>{event.date}</time>
               </div>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

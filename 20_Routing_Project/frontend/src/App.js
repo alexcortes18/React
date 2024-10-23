@@ -22,7 +22,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import EventsPage, { loader as eventsLoader } from './pages/EventsPage';
-import EventDetailPage from './pages/EventDetailPage';
+import EventDetailPage, { loader as eventDetailLoader } from './pages/EventDetailPage';
 import EditEventPage from './pages/EditEventPage';
 import NewEventPage from './pages/NewEventPage';
 import RootLayout from './pages/RootLayout';
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement: <ErrorPage/>, // this will show up if there is an error in this level, or any lower level.
+    errorElement: <ErrorPage />, // this will show up if there is an error in this level, or any lower level.
     children: [
       { index: true, element: <HomePage /> },
       {
@@ -55,9 +55,20 @@ const router = createBrowserRouter([
             // the loader function makes the returned value available in the page we render here (EventsPage)
             // It is ALSO available for any children of <EventsPage>
           },
-          { path: ':eventId', element: <EventDetailPage /> },
+          {
+            path: ':eventId',
+            id: 'event-detail', //id to identify which loader we want to use with useRouterLoaderData(). This is
+            // for the children of this path, like EventDetailPage and EditEventPage.
+            loader: eventDetailLoader, // now this loader is available for both pages.
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+              },
+              { path: 'edit', element: <EditEventPage /> },
+            ]
+          },
           { path: 'new', element: <NewEventPage /> },
-          { path: ':eventId/edit', element: <EditEventPage /> },
         ]
       }
     ]
