@@ -9,7 +9,8 @@ export default function ErrorPage() {
     let message;
 
     if (error.status === 500) {
-        message = JSON.parse(error.data).message; //.data coming from the Response object.
+        // message = JSON.parse(error.data).message; //.data coming from the Response object.
+        message = error.data.message; // we don't have to parse it if we use the json() function to return error.
     }
 
     if (error.status === 404) {

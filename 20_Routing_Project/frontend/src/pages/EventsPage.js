@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 
 import EventsList from '../components/EventsList';
-import { useLoaderData } from 'react-router-dom'; // to use data from a loader function from the Router Component.
+import { useLoaderData, json } from 'react-router-dom'; // to use data from a loader function from the Router Component.
 
 function EventsPage() {
     // The following commented code is BEFORE using data from a Loader in the Route Component
@@ -57,17 +57,25 @@ function EventsPage() {
 export default EventsPage;
 
 export async function loader() {
-    const response = await fetch('http://localhost:8080/events');
+    const response = await fetch('http://localhost:8080/eventss');
 
     if (!response.ok) {
+        // Option 1:
         // return { isError: true, message: 'Could not fetch events.'}; // one way of doing it or:
 
+        // Option 2:
         // throw {message: 'Could not fetch events.'}; // this is pass to the errorElement's component (ErrorPage) as 
         //part of the useRouteError hook.
 
-        throw new Response(JSON.stringify({ message: "Could not fetch events." }),
-            { status: 500 }); // we can throw a Response instead of a normal JS object to include a status object.
-            // This can again be be used in errorElement's component by using the useRouteError hook.
+        // Option 3:
+        // throw new Response(JSON.stringify({ message: "Could not fetch events." }),
+        // { status: 500 }); // we can throw a Response instead of a normal JS object to include a status object.
+        // This can again be be used in errorElement's component by using the useRouteError hook.
+
+        // Option 4: //json function from React-router
+        throw json({ message: "Could not fetch events." }, {
+            status: 500
+        });
 
     } else {
         // this was before... :
