@@ -24,10 +24,11 @@ import HomePage from './pages/HomePage'
 import EventsPage, { loader as eventsLoader } from './pages/EventsPage';
 import EventDetailPage, { loader as eventDetailLoader, action as deleteEventAction } from './pages/EventDetailPage';
 import EditEventPage from './pages/EditEventPage';
-import NewEventPage, { action as newEventAction } from './pages/NewEventPage';
+import NewEventPage from './pages/NewEventPage';
 import RootLayout from './pages/RootLayout';
 import EventRootLayout from './pages/EventRoot';
 import ErrorPage from './pages/Error'
+import { action as manipulateEventAction } from './components/EventForm';
 
 const router = createBrowserRouter([
   {
@@ -66,7 +67,10 @@ const router = createBrowserRouter([
                 element: <EventDetailPage />,
                 action: deleteEventAction,
               },
-              { path: 'edit', element: <EditEventPage /> },
+              { path: 'edit', 
+                element: <EditEventPage />,
+                action: manipulateEventAction
+              },
             ]
           },
           {
@@ -74,7 +78,7 @@ const router = createBrowserRouter([
             // action functions allows us to: to handle form submissions or HTTP methods that change data, like POST, 
             // PATCH, PUT, or DELETE. It is responsible for handling side effects or modifying server-side data, such as 
             // creating, updating, or deleting events.
-            action: newEventAction
+            action: manipulateEventAction
           },
         ]
       }
