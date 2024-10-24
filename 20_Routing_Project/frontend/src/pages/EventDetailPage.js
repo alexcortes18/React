@@ -1,4 +1,4 @@
-import { useLoaderData, useRouteLoaderData, json } from "react-router-dom";
+import { useLoaderData, useRouteLoaderData, json, redirect } from "react-router-dom";
 import EventItem from "../components/EventItem";
 
 function EventDetailPage() {
@@ -7,7 +7,7 @@ function EventDetailPage() {
 
     return (
         <>
-            <EventItem event={data.event} /> 
+            <EventItem event={data.event} />
             {/* our backend API has the 'event' data on the overall data object. */}
         </>
     );
@@ -23,12 +23,25 @@ export async function loader({ request, params }) {
     // we cannot access the ':eventId' set in the path of EventDetailPage path, because hooks (useParams) cannot
     // be used in here. so we need the params object.
 
-    const response = await fetch('http://localhost:8080/events/' + id);
+    const response = await fetch('http://localhost:8080/events/' + id, {
+        method: request.method // we could harcoded 'delete', but we can also receive it from the submitted approach
+        // from the <EventItem> component.
+    });
     if (!response.ok) {
-        throw json({message:"Could not fetch details for selected event"},{
+        throw json({ message: "Could not fetch details for selected event" }, {
             status: 500
         });
     } else {
         return response; // we can return such response object in our loader. See EventsPage comments.
     }
+}
+
+
+export async function action({ request, params }) {
+    const eventId = params.eventId;
+    const response = await fetch('http://localhost:8080/events/' + eventId);
+    if (!response.ok) {
+        throw json({ messae: 'Could not delete event' }, { status: 500 });
+    }
+    return redirect('/events');
 }

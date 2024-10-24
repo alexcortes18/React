@@ -17,41 +17,47 @@ function EventForm({ method, event }) {
       IMPORTANT: the form data is automatically submitted to the action function of the route that rendered the form.
       In this case to: http://localhost:3000/events/new, which is to NewEventPage.js
       */}
+
+      {/* 
+      If we used the prop or value: 'action', like 'action:/some-path' in this Form, this will trigger
+      the action in that other path, whenever the Form is submitted. If no action is specified then, it is the
+      action of the route that rendered the form.
+      */}
       <p>
         <label htmlFor="title">Title</label>
-        <input 
-        id="title" 
-        type="text" 
-        name="title" //this names are important to be able to extract the data later.
-        required 
-        defaultValue={event ? event.title : ''}/>
+        <input
+          id="title"
+          type="text"
+          name="title" //this names are important to be able to extract the data later.
+          required
+          defaultValue={event ? event.title : ''} />
       </p>
       <p>
         <label htmlFor="image">Image</label>
-        <input 
-        id="image" 
-        type="url" 
-        name="image" 
-        required 
-        defaultValue={event ? event.image : ''}/>
+        <input
+          id="image"
+          type="url"
+          name="image"
+          required
+          defaultValue={event ? event.image : ''} />
       </p>
       <p>
         <label htmlFor="date">Date</label>
         <input
-        id="date" 
-        type="date" 
-        name="date" 
-        required 
-        defaultValue={event ? event.date : ''}/>
+          id="date"
+          type="date"
+          name="date"
+          required
+          defaultValue={event ? event.date : ''} />
       </p>
       <p>
         <label htmlFor="description">Description</label>
         <textarea
-        id="description" 
-        name="description" 
-        rows="5" 
-        required
-        defaultValue={event ? event.description : ''}/>
+          id="description"
+          name="description"
+          rows="5"
+          required
+          defaultValue={event ? event.description : ''} />
       </p>
       <div className={classes.actions}>
         <button type="button" onClick={cancelHandler}>

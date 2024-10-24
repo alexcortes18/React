@@ -23,7 +23,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import EventsPage, { loader as eventsLoader } from './pages/EventsPage';
 import EventDetailPage, { loader as eventDetailLoader } from './pages/EventDetailPage';
-import EditEventPage from './pages/EditEventPage';
+import EditEventPage, { action as deleteEventAction } from './pages/EditEventPage';
 import NewEventPage, { action as newEventAction } from './pages/NewEventPage';
 import RootLayout from './pages/RootLayout';
 import EventRootLayout from './pages/EventRoot';
@@ -64,6 +64,7 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <EventDetailPage />,
+                action: deleteEventAction,
               },
               { path: 'edit', element: <EditEventPage /> },
             ]
@@ -73,7 +74,8 @@ const router = createBrowserRouter([
             // action functions allows us to: to handle form submissions or HTTP methods that change data, like POST, 
             // PATCH, PUT, or DELETE. It is responsible for handling side effects or modifying server-side data, such as 
             // creating, updating, or deleting events.
-            action: newEventAction},
+            action: newEventAction
+          },
         ]
       }
     ]
