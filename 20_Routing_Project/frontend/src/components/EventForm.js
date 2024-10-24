@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Form } from 'react-router-dom';
 
 import classes from './EventForm.module.css';
 
@@ -9,13 +9,20 @@ function EventForm({ method, event }) {
   }
 
   return (
-    <form className={classes.form}>
+    <Form method='post' className={classes.form}>
+      {/* 
+      we use Form (and not the common 'form') from react-router to deal easier with the form data.
+      Instead of submitting the form, React Router submits it to our 'action' in our path of our router element. 
+      
+      IMPORTANT: the form data is automatically submitted to the action function of the route that rendered the form.
+      In this case to: http://localhost:3000/events/new, which is to NewEventPage.js
+      */}
       <p>
         <label htmlFor="title">Title</label>
         <input 
         id="title" 
         type="text" 
-        name="title" 
+        name="title" //this names are important to be able to extract the data later.
         required 
         defaultValue={event ? event.title : ''}/>
       </p>
@@ -52,7 +59,7 @@ function EventForm({ method, event }) {
         </button>
         <button>Save</button>
       </div>
-    </form>
+    </Form>
   );
 }
 
