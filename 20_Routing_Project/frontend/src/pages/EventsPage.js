@@ -1,7 +1,8 @@
 // import { useEffect, useState } from 'react';
 
+import { Suspense } from 'react';
 import EventsList from '../components/EventsList';
-import { useLoaderData, json } from 'react-router-dom'; // to use data from a loader function from the Router Component.
+import { useLoaderData, json, defer, Await } from 'react-router-dom'; // to use data from a loader function from the Router Component.
 
 function EventsPage() {
     // The following commented code is BEFORE using data from a Loader in the Route Component
@@ -31,14 +32,17 @@ function EventsPage() {
     // fetchEvents();
     //   }, []);
 
-    const data = useLoaderData(); // this as it is, provides us with the data coming from our Loader function
+    // const data = useLoaderData(); // this as it is, provides us with the data coming from our Loader function
     // that we defined in the App.js, in our Router in the <EventsPage/> route path's loader.
-
     // if(data.isError){ // data return by loader function, and isError is true when !response.ok happens
     //     return <p>{data.message}</p>
     // }
+    // const events = data.events; // if we just return 'response' in our Loader function.
 
-    const events = data.events; // if we just return 'response' in our Loader function.
+
+    // NOW, since we are using defer(), the events refer now to key value pair of our object in defer().
+    const { events } = useLoaderData();
+    console.log(events);
 
     return (
         <>
@@ -47,16 +51,27 @@ function EventsPage() {
             {error && <p>{error}</p>}
         </div> */}
             {/* {!isLoading && fetchedEvents && <EventsList events={fetchedEvents} />} */}
-            <EventsList events={events} />
+            {/* <EventsList events={events} /> */}
             {/* ^ If we decide to use the loader here, we can pass the events as a prop */}
             {/* <EventsList/> If we decide to use the loader in the child component, no need to pass the prop */}
+
+            {/* --------------------------------------------------------------------------------------------- */}
+            {/* Since now we are using the defer() function, we need: */}
+            <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
+                {/* events in here is from the key in our defer(). */}
+                <Await resolve={events}>
+                    {/* When the promise resolves we execute the dynamic function once we have the data: 
+                    BUUUUUT we have to manually parse the data again.*/}
+                    {(loadedEvents) => <EventsList events={loadedEvents} />}
+                </Await>
+            </Suspense>
         </>
     );
 }
 
 export default EventsPage;
 
-export async function loader() {
+async function loadEvents() {
     const response = await fetch('http://localhost:8080/events');
 
     if (!response.ok) {
@@ -80,8 +95,8 @@ export async function loader() {
     } else {
         // this was before... :
         // OPTION 1:
-        // const resData = await response.json();
-        // return resData.events; 
+        const resData = await response.json();
+        return resData.events; 
 
 
         // we can return any kind of data, for example a 'Response' data, because the React 'router' package
@@ -95,8 +110,24 @@ export async function loader() {
 
         // so we can just take the response and return that in the loader;
         // OPTION 3:
-        return response; // and useLoaderData will give us the data from the response, but we might need to dig a bit
+        // return response; // and useLoaderData will give us the data from the response, but we might need to dig a bit
         // into it like something.events (in this case we have an events object).
-
     }
+}
+
+export function loader() {
+    // defer lets you load parts of your data asynchronously without delaying the initial page render. 
+    // It takes an object where each property represents data to load, and the values can be promises. 
+    // Routes using defer will render immediately and continue loading deferred data in the background. 
+    // Once the data resolves, components like useLoaderData can access it, allowing a page to load quickly and 
+    // show a loading state for specific data if needed.
+
+    return defer({
+        events: loadEvents(),
+        // we could add more keys and values if we had more data to load, such as:
+        // events: loadEvents(),
+        // userData: loadUserData(),
+        // settings: loadSettings()
+    });
+
 }
