@@ -29,6 +29,7 @@ import RootLayout from './pages/RootLayout';
 import EventRootLayout from './pages/EventRoot';
 import ErrorPage from './pages/Error'
 import { action as manipulateEventAction } from './components/EventForm';
+import NewsletterPage, { action as newsletterAction } from './components/Newsletter';
 
 const router = createBrowserRouter([
   {
@@ -74,13 +75,19 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: 'new', element: <NewEventPage />,
+            path: 'new', 
+            element: <NewEventPage />,
             // action functions allows us to: to handle form submissions or HTTP methods that change data, like POST, 
             // PATCH, PUT, or DELETE. It is responsible for handling side effects or modifying server-side data, such as 
             // creating, updating, or deleting events.
             action: manipulateEventAction
           },
         ]
+      },
+      {
+        path: 'newsletter',
+        element: <NewsletterPage/>,
+        action: newsletterAction,
       }
     ]
   }
