@@ -10,7 +10,8 @@ function EventsList({ events }) { // This was before when we used the loader in 
       <ul className={classes.list}>
         {events.map((event) => (
           <li key={event.id} className={classes.item}>
-            <Link to={event.id}> {/* Relative path. Goes to Event Details Page*/}
+            {/* <Link to={event.id}> Relative path. Goes to Event Details Page */}
+              <Link to={`/events/${event.id}`}>
               <img src={event.image} alt={event.title} />
               <div className={classes.content}>
                 <h2>{event.title}</h2>
