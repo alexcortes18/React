@@ -6,6 +6,7 @@ import EventsList from "../components/EventsList";
 function EventDetailPage() {
     // const data = useLoaderData(); // to load data from our loader.
     // const data = useRouteLoaderData('event-detail'); // we need an ID since now the loader is for more than one path.
+    // Meaning that children from the path of this ID can use this loader.
 
     // since we are using defer() now:
     const { event, events } = useRouteLoaderData('event-detail'); // these are FROM the defer();
@@ -29,7 +30,7 @@ function EventDetailPage() {
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
                 <Await resolve={events}>
                     {/* AGAIN REMEMBER: loadEvent is the data from the "await response.json().event" */}
-                    {(loadEvent) => <EventsList events={loadEvent} />}
+                    {(loadEvents) => <EventsList events={loadEvents} />}
                 </Await>
             </Suspense>
         </>
