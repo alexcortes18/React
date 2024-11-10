@@ -22,7 +22,9 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
-    loader: tokenLoader,
+    id: 'root',
+    loader: tokenLoader, // this loader gets the token from the browser everytime we change the route (also children routes),
+    // so this allows us to call the useRouteLoaderData('root') to get the token and then show or not show elements.
     children: [
       { index: true, element: <HomePage /> },
       {
