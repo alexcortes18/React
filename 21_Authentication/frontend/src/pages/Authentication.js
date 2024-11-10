@@ -58,7 +58,13 @@ export async function action({ request }) {
   const resData = await response.json();
   const token = resData.token;
 
+  // Storing the token in the browser
   localStorage.setItem('token', token);
+
+  // Storing the expiration data (x hours) in the browser too.
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() +1);
+  localStorage.setItem('expiration', expiration.toISOString());
 
   return redirect('/');
 
