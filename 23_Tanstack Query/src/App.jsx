@@ -4,6 +4,9 @@ import {
   createBrowserRouter,
 } from 'react-router-dom';
 
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query' // these 2 are needed to be able to use
+// query Tanstack on our app and components.
+
 import Events from './components/Events/Events.jsx';
 import EventDetails from './components/Events/EventDetails.jsx';
 import NewEvent from './components/Events/NewEvent.jsx';
@@ -37,8 +40,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient(); // general configuration object that will be required by Tanstack Query.
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
