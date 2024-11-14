@@ -21,7 +21,12 @@ export default function NewEventsSection() {
     queryKey: ['events'], // to be able to reuse or to cache the data that is yield by the request. 
     // This key is an array, because the query can be more complex like:
     // queryKey: ['event', eventId, ['reviews', { sort: 'recent' }]], for example.
+
+
     queryFn: fetchEvents, // main function (queryFn) to be able to execute HTTP logic (written by us)
+    // This can be without parameters (unlike the one in FindEventSection) if we are happy with the default
+    // object give by ReactQuery and don't need more of our own parameters for the http function.
+
     staleTime: 5000, // this controls after how much time React Query will send a request for an updated on the data
     // if it finds data in our cache. Default is zero. Now set to 5s.
     // gcTime: 30000 // garbage collector time: controls how much time the data in the cache will be kept around.

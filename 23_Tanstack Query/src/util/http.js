@@ -1,5 +1,17 @@
-export async function fetchEvents() {
-    const response = await fetch('http://localhost:3000/events');
+export async function fetchEvents({signal, searchTerm}) { //destructuring same as FinEventSection.jsx
+    // signal is used by ReactQuery to abort this fetching if it thinks it should do that, for example if we 
+    // leave the page.
+
+    console.log(searchTerm);
+    let url = 'http://localhost:3000/events';
+
+    if(searchTerm){
+        url += '?search=' + searchTerm;  // adding a query search to the url
+    }
+
+    const response = await fetch(url, {signal:signal}); //the built in fetch function has a second property which
+    // accepts a configuration object in which we can include the signal property that comes from ReactQuery's
+    // queryFn.
 
     if (!response.ok) {
         const error = new Error('An error occurred while fetching the events');
