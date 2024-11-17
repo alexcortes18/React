@@ -7,7 +7,7 @@ import EventItem from './EventItem';
 
 export default function FindEventSection() {
   const searchElement = useRef();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -15,19 +15,28 @@ export default function FindEventSection() {
     // we use the ref as queryKey the page would not be update since REFs dont update UI.
   }
 
-  const {data, isPending, isError, error } = useQuery({
-    queryKey: ['events', { search: searchTerm}], //dynamic example of queryKey
-    queryFn: ({signal}) => fetchEvents({signal, searchTerm})
+  const {data, isLoading, isError, error } = useQuery({ //we changed isPending for isLoading
+    queryKey: ['events', { search: searchTerm}], //dynamic example of queryKey. If this changes, the queryFn re-executes
+    queryFn: ({signal}) => fetchEvents({signal, searchTerm}),
     // ReactQuery passes a default object to the function we defined, in this case fetchEvents.
     // So if we want to modify said object to pass more things, or some specific things we have to use object
     // destructuring in the custom function: {signal, searchTerm}, and include the properties we want.
     // In this case, searchTerm is a value we provide to our default function, but signal is a term provided
     // with ReactQuery/ Tanstack to be able to abort the fetching if something happens.
+    enabled: searchTerm !== undefined //This enable property helps us to know when the queryFn should be ALLOWED to
+    // be executed. In this case we use 'undefined' because we want it to not called anything in the first pass when
+    // the component is first executed. Then if a user types something and deletes, then yes we want it to search
+    // as defined in the server logic.
   })
 
   let content = <p>Please enter a search term to find events.</p>;
 
-  if (isPending){
+  // isPending comes from the useQuery parameters {}, and i added the searchTerm logic, but the tutorial explains
+  // also about 'isLoading', which is not true if 'enabled' is disabled. (all from the useQuery section).
+  // if (isPending && searchTerm !== undefined){
+  //   content = <LoadingIndicator/>;
+  // }
+  if (isLoading){
     content = <LoadingIndicator/>;
   }
 
