@@ -33,7 +33,9 @@ export default function EventDetails() {
           </nav>
         </header>
         <div id="event-details-content">
-          <img src={`http://localhost:3000/${data.image}`} alt="" />
+          {data && (
+                 <img src={`http://localhost:3000/${data.image}`} alt={data.title} />
+              )}
           <div id="event-details-info">
             <div>
               {data && (
