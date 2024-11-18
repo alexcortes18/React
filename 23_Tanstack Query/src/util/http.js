@@ -1,15 +1,21 @@
-export async function fetchEvents({signal, searchTerm}) { //destructuring same as FinEventSection.jsx
+import { QueryClient } from "@tanstack/react-query";
+
+export const queryClient = new QueryClient(); // we moved it here from App.js because now we want both App.js and EventForm
+// to use it. It technically could have been an export from App.js, but I imagine is more practical or good practice
+// now since now it is used with "http logic" by NewEvent.
+
+export async function fetchEvents({ signal, searchTerm }) { //destructuring same as FindEventSection.jsx
     // signal is used by ReactQuery to abort this fetching if it thinks it should do that, for example if we 
     // leave the page.
 
     console.log(searchTerm);
     let url = 'http://localhost:3000/events';
 
-    if(searchTerm){
+    if (searchTerm) {
         url += '?search=' + searchTerm;  // adding a query search to the url
     }
 
-    const response = await fetch(url, {signal:signal}); //the built in fetch function has a second property which
+    const response = await fetch(url, { signal: signal }); //the built in fetch function has a second property which
     // accepts a configuration object in which we can include the signal property that comes from ReactQuery's
     // queryFn.
 
@@ -28,21 +34,69 @@ export async function fetchEvents({signal, searchTerm}) { //destructuring same a
 // This is for useMutation, that we are using in NewEvent.jsx
 export async function createNewEvent(eventData) {
     const response = await fetch(`http://localhost:3000/events`, {
-      method: 'POST',
-      body: JSON.stringify(eventData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        method: 'POST',
+        body: JSON.stringify(eventData),
+        headers: {
+            'Content-Type': 'application/json',
+        },
     });
-  
+
     if (!response.ok) {
-      const error = new Error('An error occurred while creating the event');
-      error.code = response.status;
-      error.info = await response.json();
-      throw error;
+        const error = new Error('An error occurred while creating the event');
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
     }
-  
+
     const { event } = await response.json();
-  
+
     return event;
-  }
+}
+
+// This is for useQuery, that we are using in EventForm.jsx
+export async function fetchSelectableImages({ signal }) {
+    const response = await fetch(`http://localhost:3000/events/images`, { signal });
+
+    if (!response.ok) {
+        const error = new Error('An error occurred while fetching the images');
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
+    }
+
+    const { images } = await response.json();
+
+    return images;
+}
+
+// to be used with EventsDetails' useQuery.
+export async function fetchEvent({ id, signal }) {
+    const response = await fetch(`http://localhost:3000/events/${id}`, { signal });
+
+    if (!response.ok) {
+        const error = new Error('An error occurred while fetching the event');
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
+    }
+
+    const { event } = await response.json();
+
+    return event;
+}
+
+
+export async function deleteEvent({ id }) {
+    const response = await fetch(`http://localhost:3000/events/${id}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        const error = new Error('An error occurred while deleting the event');
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
+    }
+
+    return response.json();
+}

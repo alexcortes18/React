@@ -6,6 +6,12 @@ import express from 'express';
 const app = express();
 
 app.use(bodyParser.json());
+
+// Static File Serving in Backend: In your backend server (e.g., Express.js), static files are likely served 
+// using middleware like express.static. This middleware maps a folder (like /public) to the base URL of the server 
+// (e.g., http://localhost:3000/).
+// This makes files in the /public folder accessible directly via the base URL. For example:
+// A file backend/public/meeting-networking.jpg is accessible at http://localhost:3000/meeting-networking.jpg.
 app.use(express.static('public'));
 
 app.use((req, res, next) => {
