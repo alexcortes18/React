@@ -85,7 +85,7 @@ export async function fetchEvent({ id, signal }) {
     return event;
 }
 
-
+// to be used with EventsDetails' useMutation.
 export async function deleteEvent({ id }) {
     const response = await fetch(`http://localhost:3000/events/${id}`, {
         method: 'DELETE',
