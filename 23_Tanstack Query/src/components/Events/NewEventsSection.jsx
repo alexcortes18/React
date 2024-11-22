@@ -18,14 +18,21 @@ export default function NewEventsSection() {
   // - error: contains information about the error, like the message
   // many more.
   const { data, isPending, isError, error } = useQuery({ 
-    queryKey: ['events'], // to be able to reuse or to cache the data that is yield by the request. 
+    queryKey: ['events', {max: 3}], // to be able to reuse or to cache the data that is yield by the request. 
     // This key is an array, because the query can be more complex like:
     // queryKey: ['event', eventId, ['reviews', { sort: 'recent' }]], for example.
 
+    // We later added the funcionality of seeing only the latest '3' events in our NewEventSection by adding 'max'.
+    // This is also supported by the backend code.
 
-    queryFn: fetchEvents, // main function (queryFn) to be able to execute HTTP logic (written by us)
+    queryFn: ({signal, queryKey}) => fetchEvents({signal, ...queryKey[1]}), 
+    // main function (queryFn) to be able to execute HTTP logic (written by us)
     // This can be without parameters (unlike the one in FindEventSection) if we are happy with the default
     // object give by ReactQuery and don't need more of our own parameters for the http function.
+
+    // We can also get the queryKey passed as an object to queryFn, to then use its second value queryKey[1], to
+    // get the {max:3} we sent in the actual queryKey, and also don't forget to spread it (...).
+    // This: ...queryKey[1] ===  {max: 3} (from the queryKey itself.)
 
     staleTime: 5000, // this controls after how much time React Query will send a request for an updated on the data
     // if it finds data in our cache. Default is zero. Now set to 5s.

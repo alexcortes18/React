@@ -4,15 +4,22 @@ export const queryClient = new QueryClient(); // we moved it here from App.js be
 // to use it. It technically could have been an export from App.js, but I imagine is more practical or good practice
 // now since now it is used with "http logic" by NewEvent.
 
-export async function fetchEvents({ signal, searchTerm }) { //destructuring same as FindEventSection.jsx
+export async function fetchEvents({ signal, searchTerm, max }) { //destructuring same as FindEventSection.jsx
     // signal is used by ReactQuery to abort this fetching if it thinks it should do that, for example if we 
     // leave the page.
 
     console.log(searchTerm);
     let url = 'http://localhost:3000/events';
 
-    if (searchTerm) {
+    // We later added the funcionality of seeing only the latest '3' events in our NewEventSection by adding 'max'.
+    // This is also supported by the backend code.
+
+    if (searchTerm && max) {
+        url += '?search=' + searchTerm + '?max=' + max;
+    } else if (searchTerm) {
         url += '?search=' + searchTerm;  // adding a query search to the url
+    } else if (max) {
+        url += '?max=' + max;
     }
 
     const response = await fetch(url, { signal: signal }); //the built in fetch function has a second property which
@@ -103,19 +110,19 @@ export async function deleteEvent({ id }) {
 
 export async function updateEvent({ id, event }) {
     const response = await fetch(`http://localhost:3000/events/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ event }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        method: 'PUT',
+        body: JSON.stringify({ event }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
     });
-  
+
     if (!response.ok) {
-      const error = new Error('An error occurred while updating the event');
-      error.code = response.status;
-      error.info = await response.json();
-      throw error;
+        const error = new Error('An error occurred while updating the event');
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
     }
-  
+
     return response.json();
-  }
+}

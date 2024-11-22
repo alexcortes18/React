@@ -39,6 +39,7 @@ app.get('/events', async (req, res) => {
     });
   }
 
+  // max helps us to set how many max events we want to show in Recently Added Events.
   if (max) {
     events = events.slice(events.length - max, events.length);
   }
