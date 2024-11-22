@@ -4,7 +4,7 @@ import { fetchEvent, updateEvent, queryClient } from '../../util/http.js';
 
 import Modal from '../UI/Modal.jsx';
 import EventForm from './EventForm.jsx';
-import LoadingIndicator from '../UI/LoadingIndicator.jsx';
+// import LoadingIndicator from '../UI/LoadingIndicator.jsx';
 import ErrorBlock from '../UI/ErrorBlock.jsx';
 
 export default function EditEvent() {
@@ -61,7 +61,7 @@ export default function EditEvent() {
 
     // This will be called whenever this mutation is done, no matter if it failed or succeeded.
     onSettled: () => {
-      queryClient.invalidateQueries(['events',{id: params.id}]);
+      queryClient.invalidateQueries(['events', { id: params.id }]);
       // just to be extra sure that the backend and frontend have the same data, we invalidate the query with the
       // key we want to invalidate, and make ReactQuery refetch it with this fn.
     }
@@ -80,11 +80,13 @@ export default function EditEvent() {
 
   let content;
 
-  if (isPending) {
-    content = <div className='center'>
-      <LoadingIndicator />
-    </div>
-  }
+  // We got rid of this since there should not be any scenario now where we need to show a Loading Indicator.
+  // This is because now, with the loader() function, we get the data before the component loads.
+  // if (isPending) {
+  //   content = <div className='center'>
+  //     <LoadingIndicator />
+  //   </div>
+  // }
   if (isError) {
     content = <>
       <ErrorBlock title="Failed to load event."
@@ -111,4 +113,27 @@ export default function EditEvent() {
       {content}
     </Modal>
   );
+}
+
+export function loader({params}) { //params property received by React Router which contains access to the route parameter of this active route.
+  // Since here we cannot use useQuery, we can still use queryClient to do the same thing.
+  
+  return queryClient.fetchQuery({
+    queryKey: ['events', { id: params.id }],
+    queryFn: ({ signal }) => fetchEvent({ signal, id: params.id })
+  });
+
+
+// Using a loader pre-fetches the data before rendering the component, ensuring the component has the required data on 
+// initial load.
+
+// However, sticking with useQuery alongside the loader is advantageous because React Query handles:
+// Automatic re-fetching (e.g., when revisiting the tab or focusing back on the window).
+// Cache management, ensuring the UI stays responsive and up-to-date with minimal boilerplate.
+
+// Alex:
+// This is to have another approach:
+// Either we take some more time loading the component and then displaying it with all the data
+// or
+// We load the component (without this function) and then show the LoadingIndicator with isPending.
 }
