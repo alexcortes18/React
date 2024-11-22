@@ -13,7 +13,7 @@ export default function EventDetails() {
   const navigate = useNavigate();
 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events", { id: params.id }],
+    queryKey: ["events", {id: params.id}],
     queryFn: ({ signal }) => fetchEvent({ id: params.id, signal }),
   });
 
@@ -103,7 +103,7 @@ export default function EventDetails() {
             )}
           </div>
           {isErrorDeleting && <ErrorBlock title="Failed to delete event."
-          message={deleteError.info?.message || 'Failed to delete event, please try again later.'}/>}
+            message={deleteError.info?.message || 'Failed to delete event, please try again later.'} />}
         </Modal>
       }
       <Outlet />

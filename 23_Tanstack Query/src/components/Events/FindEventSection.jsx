@@ -23,10 +23,8 @@ export default function FindEventSection() {
     // destructuring in the custom function: {signal, searchTerm}, and include the properties we want.
     // In this case, searchTerm is a value we provide to our default function, but signal is a term provided
     // with ReactQuery/ Tanstack to be able to abort the fetching if something happens.
-    enabled: searchTerm !== undefined //This enable property helps us to know when the queryFn should be ALLOWED to
-    // be executed. In this case we use 'undefined' because we want it to not called anything in the first pass when
-    // the component is first executed. Then if a user types something and deletes, then yes we want it to search
-    // as defined in the server logic.
+    enabled: searchTerm !== undefined, //This enable property helps us to know when the queryFn should be ALLOWED to
+    // be executed.
   })
 
   let content = <p>Please enter a search term to find events.</p>;

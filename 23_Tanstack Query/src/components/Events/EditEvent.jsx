@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { fetchEvent, updateEvent } from '../../util/http.js';
 
 import Modal from '../UI/Modal.jsx';
 import EventForm from './EventForm.jsx';
@@ -10,12 +11,20 @@ export default function EditEvent() {
   const navigate = useNavigate();
   const params = useParams();
 
+  // this is to fetch the data of the event we want to Edit. To have it populate in the Event Form.
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['events', {id: params.id}],
     queryFn: ({ signal }) => fetchEvent({ signal, id: params.id })
   });
 
-  function handleSubmit(formData) { }
+  const { mutate } = useMutation({
+    mutationFn: updateEvent,
+  });
+
+  function handleSubmit(formData) {
+    mutate({id: params.id, event: formData});
+    navigate('../');
+  }
 
   function handleClose() {
     navigate('../');

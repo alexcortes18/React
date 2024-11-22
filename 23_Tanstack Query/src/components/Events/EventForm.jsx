@@ -24,6 +24,17 @@ export default function EventForm({ inputData, onSubmit, children }) {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
+    // FormData: Collects all form input fields (with name attributes) and their values into a FormData object.
+
+    // Object.fromEntries(formData):
+    // Converts the FormData object into a plain JavaScript object. Example:
+    // {
+    //   title: "My Event",
+    //   description: "An amazing event",
+    // }
+
+    // Then we just add one more entry which would me the image name text:
+
     onSubmit({ ...data, image: selectedImage });
   }
 
