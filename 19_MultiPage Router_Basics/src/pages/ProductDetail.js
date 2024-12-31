@@ -8,7 +8,7 @@ function ProductDetailsPage() {
         <>
             <h1>Product Details!</h1>
             <p>{params.productId}</p>
-            <p><Link to={".."} relative='path'>Back</Link></p> 
+            <p><Link to={".."} relative='path'>Back</Link></p>
             {/* ".." special command to go back one time, BUT it is resolve relative to the path definitions, and
             since ProductDetailPage is a direct children of the "/root" path, then we are sent to the Home page.
             We can change this with the 'relative' prop. Default is "route" which is the definition we set already,
