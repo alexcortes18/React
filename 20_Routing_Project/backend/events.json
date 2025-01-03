@@ -1,1 +1,39 @@
-{"events":[{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"c360cb2f-3a6f-49ea-867e-990b5c125c45"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"35ffc0f5-0046-494e-b858-3c4f58eafad2"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"64bf7bab-a408-4b96-a9b0-dd23c6486659"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"1661cefc-e274-4c65-ab07-68164ad759a3"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"8451cc24-3d91-45e2-ae63-1a227bf3b262"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"6be89add-3760-4f85-a360-ded8653b059f"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"5bfc7f40-bac9-43d3-92a1-aa81f1a37e24"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"9a73add0-5ac4-4828-91a2-8753ad442648"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"cc95a204-31aa-46c0-a82e-74adecb17a4e"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"49eff882-ca6d-44ce-be72-cf9580824908"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"844f04fd-26f2-4ac7-a44a-2d6ad1e27080"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"037eaf72-f1b5-450e-8423-8cae972a00cd"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"c93d7237-b470-41d6-9ca0-fdd72b447206"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"b19b6e83-4137-4f82-8f4b-c4eb63c27b25"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"18c6d4ba-dc9b-419d-b493-3e842bc00821"},{"title":"Concierto","description":"Concierto en vivo.","date":"2023-10-10T10:00:00Z","image":"http://ejemplo.com/imagen.jpg","id":"697c1599-d9bd-4464-94a5-4b1dd59ae26b"},{"title":"Alex testing","image":"https://media.istockphoto.com/id/668221242/photo/party-people-communication-talking-happiness-concept.jpg?s=612x612&w=0&k=20&c=RBev8n9upoTkyMXoH6sHwLjkGm0OoZb6xDrSb1RE9-A=","date":"2025-01-03","description":"mmmm","id":"3eb10eff-822b-41bc-8f58-3eb1c38471d6"},{"title":"Test Event","description":"This is a test event","date":"2025-01-15","image":"http://example.com/test.jpg","id":"3970c19e-a24f-48ad-bfb5-d3a29eace1e3"},{"title":"Example event","image":"https://media.istockphoto.com/id/1458349885/photo/close-up-asian-chinese-friends-celebration-toasting-outdoor-dining.jpg?s=612x612&w=0&k=20&c=Q5UWF-9994f-lbieeId1pQMXobdEyXKoAnH_vwwZMfk=","date":"2024-10-26","description":"hi","id":"14655e09-10c5-4f3a-9a39-4ef72cf30f90"},{"title":"alex-edited","image":"https://media.istockphoto.com/id/668221242/photo/party-people-communication-talking-happiness-concept.jpg?s=612x612&w=0&k=20&c=RBev8n9upoTkyMXoH6sHwLjkGm0OoZb6xDrSb1RE9-A=","date":"2024-10-24","description":"date was mispelled to data :(","id":"059ac873-2919-44f8-b8fe-6e8cc2e6a248"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}]}
+{
+    "events": [
+        {
+            "title": "Alex testing",
+            "image": "https://media.istockphoto.com/id/668221242/photo/party-people-communication-talking-happiness-concept.jpg?s=612x612&w=0&k=20&c=RBev8n9upoTkyMXoH6sHwLjkGm0OoZb6xDrSb1RE9-A=",
+            "date": "2025-01-03",
+            "description": "mmmm",
+            "id": "3eb10eff-822b-41bc-8f58-3eb1c38471d6"
+        },
+        {
+            "title": "Test Event",
+            "description": "This is a test event",
+            "date": "2025-01-15",
+            "image": "http://example.com/test.jpg",
+            "id": "3970c19e-a24f-48ad-bfb5-d3a29eace1e3"
+        },
+        {
+            "title": "Example event",
+            "image": "https://media.istockphoto.com/id/1458349885/photo/close-up-asian-chinese-friends-celebration-toasting-outdoor-dining.jpg?s=612x612&w=0&k=20&c=Q5UWF-9994f-lbieeId1pQMXobdEyXKoAnH_vwwZMfk=",
+            "date": "2024-10-26",
+            "description": "hi",
+            "id": "14655e09-10c5-4f3a-9a39-4ef72cf30f90"
+        },
+        {
+            "title": "alex-edited",
+            "image": "https://media.istockphoto.com/id/668221242/photo/party-people-communication-talking-happiness-concept.jpg?s=612x612&w=0&k=20&c=RBev8n9upoTkyMXoH6sHwLjkGm0OoZb6xDrSb1RE9-A=",
+            "date": "2024-10-24",
+            "description": "date was mispelled to data :(",
+            "id": "059ac873-2919-44f8-b8fe-6e8cc2e6a248"
+        },
+        {
+            "id": "e1",
+            "title": "A dummy event",
+            "date": "2023-02-22",
+            "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
+            "description": "Join this amazing event and connect with fellow developers."
+        }
+    ]
+}
