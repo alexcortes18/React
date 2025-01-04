@@ -93,7 +93,7 @@ export async function action({ request, params }) {
         // from the <EventItem> component.
     });
     if (!response.ok) {
-        throw json({ messae: 'Could not delete event' }, { status: 500 });
+        throw json({ message: 'Could not delete event' }, { status: 500 });
     }
     return redirect('/events');
 }
